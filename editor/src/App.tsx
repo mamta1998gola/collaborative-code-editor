@@ -92,8 +92,16 @@ function App() {
       setCode(updatedCode);
     });
 
-    socket.on('compileResult', (result: string) => {
-      setCompileResult(result);
+    socket.on('compileResult', (result: string | { error: string }) => {
+      if (typeof result === 'string') {
+        setCompileResult(result);
+      } else {
+        setCompileResult(`Error: ${result.error}`);
+      }
+    });
+
+    socket.on('connect_error', (error) => {
+      console.error('Connection error:', error.message);
     });
 
     return () => {
@@ -117,14 +125,16 @@ function App() {
   };
 
   const handleEditorChange = (value: string | undefined) => {
-    if (value !== undefined) {
+    if (value !== undefined && isInRoom) {
       setCode(value);
       socket.emit('codeChange', { roomId, code: value });
     }
   };
 
   const handleCompile = () => {
-    socket.emit('compile', { roomId, code });
+    if (isInRoom) {
+      socket.emit('compile', { roomId, code });
+    }
   };
 
   return (
