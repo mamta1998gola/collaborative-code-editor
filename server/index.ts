@@ -21,9 +21,10 @@ app.use(
 const io = new Server(httpServer, {
   cors: {
     origin: allowedOrigin,
-    methods: ['GET', 'POST'],
-    credentials: true,
+    methods: ["GET", "POST"],
+    credentials: true
   },
+  transports: ['websocket', 'polling']
 });
 
 app.get('/', (req, res) => {
