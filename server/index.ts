@@ -10,14 +10,6 @@ const httpServer = createServer(app);
 
 const allowedOrigin = 'https://collaborative-code-editor-ui.vercel.app';
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: allowedOrigin,
-    methods: ['GET', 'POST'],
-    credentials: true, // Allow cookies if necessary
-  },
-});
-
 app.use(
   cors({
     origin: allowedOrigin,
@@ -25,6 +17,14 @@ app.use(
     credentials: true,
   })
 );
+
+const io = new Server(httpServer, {
+  cors: {
+    origin: allowedOrigin,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
 
 app.get('/', (req, res) => {
   res.send('Server is running');
