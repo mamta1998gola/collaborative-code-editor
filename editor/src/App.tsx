@@ -79,7 +79,11 @@ const CompileResult = styled.div`
   white-space: pre-wrap;
 `;
 
-const socket: Socket = io('https://collaborative-code-editor-lilac.vercel.app');
+// const socket: Socket = io('https://collaborative-code-editor-lilac.vercel.app');
+const socket: Socket = io('https://collaborative-code-editor-lilac.vercel.app', {
+  withCredentials: true,
+  transports: ['websocket', 'polling'],
+});
 
 function App() {
   const [code, setCode] = useState('// Start coding here');
