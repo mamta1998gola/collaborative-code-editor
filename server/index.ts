@@ -9,7 +9,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin: "https://collaborative-code-editor-ui.vercel.app/", // Vite default port
+        origin: "https://collaborative-code-editor-ui.vercel.app", // Vite default port
         methods: ["GET", "POST"]
     }
 });
